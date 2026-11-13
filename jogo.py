@@ -47,7 +47,7 @@ while True:
 
     opcao = input("Escolha: ")
 
-    # 1 - ATACAR
+    # 1 - Atacar inimigo:
     if opcao == "1":
         # juntar só os vivos
         vivos = []
@@ -72,26 +72,32 @@ while True:
                 else:
                     inimigo = vivos[numero - 1]
 
+                    # atacar aleatoriamente 
                     dano = random.randint(10, 20)
                     inimigo["vida"] = inimigo["vida"] - dano
+
+                    # se vida inimigo tiver menor q 0, poe 0
                     if inimigo["vida"] < 0:
                         inimigo["vida"] = 0
                     print("Atacaste o " + inimigo["nome"] + " e causaste " + str(dano) + " de dano.")
 
+                    # inimigo morreu
                     if inimigo["vida"] == 0:
                         jogador["pontos"] = jogador["pontos"] + inimigo["pontos"]
                         jogador["derrotados"] = jogador["derrotados"] + 1
                         print(inimigo["nome"] + " foi derrotado! +" + str(inimigo["pontos"]) + " pontos.")
                     else:
+                        # inimigo contra ataca
                         print(inimigo["nome"] + " ficou com " + str(inimigo["vida"]) + " de vida.")
                         contra = random.randint(5, inimigo["ataque"])
                         jogador["vida"] = jogador["vida"] - contra
+                    
                         if jogador["vida"] < 0:
                             jogador["vida"] = 0
                         print(inimigo["nome"] + " contra-atacou e causou " + str(contra) + " de dano.")
                         print("Ficaste com " + str(jogador["vida"]) + " de vida.")
 
-    # 2 - CONSULTAR ESTADO
+# 2 - Consultar estado:
     elif opcao == "2":
         vivos = 0
         for inimigo in inimigos:
@@ -104,7 +110,7 @@ while True:
         print("Inimigos vivos: " + str(vivos))
         print("Pocoes: " + str(jogador["pocoes"]))
 
-    # 3 - LISTAR INIMIGOS
+ # 3 - Listar inimigos vivos:
     elif opcao == "3":
         encontrou = False
         for i in range(len(inimigos)):
@@ -114,7 +120,7 @@ while True:
         if encontrou == False:
             print("Nao existem inimigos vivos.")
 
-    # 4 - USAR POCAO
+ # 4 - Usar poção de cura:
     elif opcao == "4":
         if jogador["pocoes"] <= 0:
             print("Nao tens pocoes.")
@@ -127,7 +133,7 @@ while True:
             jogador["pocoes"] = jogador["pocoes"] - 1
             print("Pocao usada! Vida: " + str(jogador["vida"]) + " | Pocoes restantes: " + str(jogador["pocoes"]))
 
-    # 5 - FUGIR
+# 5 -Fugir:
     elif opcao == "5":
         resultado = "FUGA"
         break
@@ -135,7 +141,7 @@ while True:
     else:
         print("Opcao invalida! Escolhe de 1 a 5.")
 
-    # verificar fim do jogo
+# verificar fim do jogo
     if jogador["vida"] <= 0:
         resultado = "DERROTA"
         break
@@ -148,7 +154,7 @@ while True:
         resultado = "VITORIA"
         break
 
-# ---------- Fim do jogo ----------
+# ---------- fim do jogo ----------
 print("\n--- FIM DO JOGO ---")
 if resultado == "VITORIA":
     print("VITORIA! Derrotaste todos os inimigos!")
@@ -157,3 +163,4 @@ elif resultado == "DERROTA":
 else:
     print("Partida terminada por FUGA. A fuga nao e uma vitoria.")
 print("Pontos finais: " + str(jogador["pontos"]))
+
